@@ -7,203 +7,96 @@
     <style>
         * {
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: system-ui, sans-serif;
         }
         body {
-            max-width: 760px;
-            margin: 3rem auto;
-            padding: 0 1rem;
-            color: #222;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
             background-color: #f7f8fa;
         }
-        .header-desc {
-            text-align: center;
-            color:#666;
-            margin:0.5rem 0 2rem;
-        }
-        .card {
-            background: #ffffff;
-            padding: 24px;
+        .box {
+            background: white;
+            padding: 30px;
             border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-            margin-bottom: 30px;
+            box-shadow: 0 2px 12px #00000014;
         }
-        h1,h2 {
+        h1 {
             text-align:center;
-            margin-bottom:1rem;
+            color:#222;
+            font-size:24px;
+        }
+        .tip {
+            color:#555;
+            text-align:center;
+            margin-bottom:24px;
+        }
+        .radio-line {
+            margin-bottom:20px;
         }
         label {
             display:block;
-            margin-top:14px;
+            margin-top:16px;
             font-weight:500;
+            color:#333;
         }
-        input, select, textarea {
+        input, textarea {
             width:100%;
+            padding:10px 12px;
             margin-top:6px;
-            padding:10px;
-            border:1px solid #dcdfe6;
+            border:1px solid #ddd;
             border-radius:8px;
-            font-size:1rem;
+            font-size:16px;
         }
         textarea {
-            min-height:120px;
-            resize: vertical;
+            min-height:160px;
+            resize:vertical;
         }
         button {
-            margin-top:18px;
             width:100%;
             padding:12px;
+            margin-top:22px;
+            background:#3b82f6;
+            color:white;
             border:none;
             border-radius:8px;
-            background:#4080ff;
-            color:white;
-            font-size:1rem;
+            font-size:17px;
             cursor:pointer;
         }
-        button:active {
-            background:#3366dd;
-        }
-        .result {
-            margin-top:12px;
-            padding:12px;
-            border-radius:8px;
-            background:#ecf5ff;
-            display:none;
-        }
-        /* 公示墙卡片样式 */
-        .feedback-item {
-            border: 1px solid #e8e8e8;
-            border-radius:10px;
-            padding:16px;
-            margin-bottom:16px;
-        }
-        .tag-group{
-            display:flex;
-            gap:8px;
-            margin-bottom:8px;
-        }
-        .tag{
-            font-size:0.8rem;
-            padding:3px 8px;
-            border-radius:99px;
-            background:#eef5ff;
-            color:#4080ff;
-        }
-        .status-tag{
-            background:#e8f5e9;
-            color:#2e7d32;
-        }
-        .feedback-content{
-            margin:8px 0;
-            line-height:1.6;
-        }
-        .feedback-note{
-            margin-top:8px;
-            padding:8px;
-            background-color:#f7f7f7;
-            border-radius:6px;
-            font-size:0.9rem;
+        button:hover {
+            background:#2563eb;
         }
     </style>
 </head>
 <body>
-    <h1>📝 班级意见反馈平台</h1>
-    <p class="header-desc">提交你的班级建议；下方公示墙展示管理员审核通过的意见，同步更新处理进度</p>
+<div class="box">
+    <h1>班级意见反馈平台</h1>
+    <div class="tip">你可以选择匿名或者实名提交，所有反馈我都会查看并跟进</div>
 
-    <!-- 提交表单区域 -->
-    <div class="card">
-        <h2>提交反馈</h2>
-        <form id="submitForm">
-            <label>提交方式</label>
-            <select id="submitType" name="提交方式" required>
-                <option value="匿名">匿名（不留联系方式，无法单独回复）</option>
-                <option value="实名">实名（可留下联系方式，方便后续沟通）</option>
-            </select>
+    <form action="https://formsubmit.co/85992dce01d8ba7cf852ad5688bde794" method="POST">
+        <!-- 提交成功跳转到提示文字页面 -->
+        <input type="hidden" name="_redirect" value="https://hydrologic0306.github.io/class-feedback-platform/?ok=1">
+        <input type="hidden" name="_autoresponse" value="">
 
-            <label>反馈分类</label>
-            <select name="反馈分类" required>
-                <option value="作业压力">作业压力</option>
-                <option value="班级活动">班级活动</option>
-                <option value="自习纪律">自习纪律</option>
-                <option value="班委建议">班委建议</option>
-                <option value="其他">其他</option>
-            </select>
-
-            <label>反馈内容</label>
-            <textarea name="反馈内容" placeholder="请描述你的想法、问题或建议..." required></textarea>
-
-            <label id="contactLabel" style="display:none;">联系方式（仅实名可见）</label>
-            <input id="contact" name="联系方式" style="display:none;" placeholder="微信/手机号">
-
-            <button type="submit">提交反馈</button>
-        </form>
-        <div id="submitResult" class="result"></div>
-    </div>
-
-    <!-- 公示墙区域 -->
-    <div class="card">
-        <h2>📋 建议公示墙</h2>
-        <p style="color:#666;font-size:0.9rem;margin-bottom:1rem;">所有内容均经过审核，个人隐私信息已脱敏</p>
-        
-        <!-- 示例建议，上线后由管理员后台维护 -->
-        <div class="feedback-item">
-            <div class="tag-group">
-                <span class="tag">匿名提交</span>
-                <span class="tag">自习纪律</span>
-                <span class="tag status-tag">处理中</span>
-            </div>
-            <div class="feedback-content">晚自习希望设置短暂休息时间，长时间学习容易疲惫。</div>
-            <div class="feedback-note">跟进备注：已收集建议，班会集体讨论方案。</div>
+        <div class="radio-line">
+            <p>提交方式：</p>
+            <input type="radio" id="anonymous" name="type" value="匿名反馈" checked>
+            <label for="anonymous">匿名提交（不填写姓名）</label>
+            <input type="radio" id="realname" name="type" value="实名反馈">
+            <label for="realname">实名提交（留下姓名，方便后续沟通）</label>
         </div>
-        <div class="feedback-item">
-            <div class="tag-group">
-                <span class="tag">实名提交</span>
-                <span class="tag">班级活动</span>
-                <span class="tag status-tag">待处理</span>
-            </div>
-            <div class="feedback-content">希望可以组织一次班级户外团建活动。</div>
-            <div class="feedback-note">跟进备注：暂未安排。</div>
-        </div>
-    </div>
 
-<script>
-    const submitType = document.getElementById('submitType');
-    const contactInput = document.getElementById('contact');
-    const contactLabel = document.getElementById('contactLabel');
-    const resultBox = document.getElementById('submitResult');
-    const form = document.getElementById("submitForm");
+        <label for="name">姓名（匿名可以留空）</label>
+        <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
 
-    // 实名切换，显示/隐藏联系方式
-    submitType.onchange = () => {
-        if(submitType.value === '实名'){
-            contactInput.style.display = 'block';
-            contactLabel.style.display = 'block';
-        }else{
-            contactInput.style.display = 'none';
-            contactLabel.style.display = 'none';
-        }
-    }
+        <label for="contact">联系方式（可选）</label>
+        <input type="text" name="contact" id="contact" placeholder="QQ/微信，方便我回复你">
 
-    //表单提交逻辑（这里后面替换成国内表单接口）
-    form.addEventListener("submit", async function(e){
-        e.preventDefault();
-        resultBox.style.display = "block";
-        resultBox.innerText = "提交中...";
-        
-        // ============这里后续替换为国内表单接口地址===========
-        const formData = new FormData(form);
-        try{
-            // 等待拿到国内表单接口，替换下面url
-            // await fetch("表单接口地址", {method:"POST", body:formData})
-            resultBox.innerText = "✅提交成功！你的建议等待审核，通过后会展示在公示墙";
-            form.reset();
-        }catch(err){
-            resultBox.innerText = "❌提交失败，请稍后重试";
-        }
-        setTimeout(()=>{resultBox.style.display="none"},3000);
-    })
-</script>
+        <label for="message">反馈内容（必填）</label>
+        <textarea name="message" id="message" placeholder="写下你的建议、问题或者想法..." required></textarea>
+
+        <button type="submit">提交反馈</button>
+    </form>
+</div>
 </body>
 </html>
