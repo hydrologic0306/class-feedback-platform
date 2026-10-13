@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>会计264专属班级班委意见反馈平台</title>
+    <title>班级意见反馈平台</title>
     <style>
         * {
             box-sizing: border-box;
@@ -152,19 +152,19 @@
     <div class="card">
         <h2>📋 反馈处理进度公示</h2>
         <div class="feedback-item">
-            <span>【示例】自习环境优化建议</span>
+            <span>【示例#001】自习环境优化建议</span>
             <span class="status-pending">处理中</span>
         </div>
         <div class="feedback-item">
-            <span>【示例】班级通知发布方式优化</span>
+            <span>【示例#002】班级通知发布方式优化</span>
             <span class="status-done">已完成</span>
         </div>
         <div class="feedback-item">
-            <span>【示例】增加课后学习资料分享</span>
+            <span>【示例#003】增加课后学习资料分享</span>
             <span class="status-pending">处理中</span>
         </div>
         <p style="font-size:14px;color:#718096;margin-top:16px;">
-            提示：这里只展示汇总后的问题摘要，不会泄露任何提交人的信息。
+            提示：这里只展示汇总后的问题摘要与工单编号，不会泄露任何提交人的信息。
         </p>
     </div>
 
@@ -173,6 +173,7 @@
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
             <input type="hidden" name="subject" value="班级新反馈">
+            <input type="hidden" id="ticket_id" name="工单编号">
 
             <label for="category">反馈分类</label>
             <select name="category" id="category" required>
@@ -213,6 +214,13 @@
 </div>
 
 <script>
+// 生成6位随机工单编号
+function genTicketID(){
+    return '#' + Math.floor(Math.random()*1000000).toString().padStart(6,'0');
+}
+const tid = genTicketID();
+document.getElementById('ticket_id').value = tid;
+
 const form = document.querySelector('form');
 form.addEventListener('submit', async function(e){
     e.preventDefault();
@@ -225,6 +233,9 @@ form.addEventListener('submit', async function(e){
     if(result.success){
         document.getElementById('msg').style.display="block";
         form.reset();
+        // 提交成功后重新生成新工单
+        const newTid = genTicketID();
+        document.getElementById('ticket_id').value = newTid;
     }
 })
 </script>
