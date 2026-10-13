@@ -19,17 +19,16 @@
             background: white;
             padding: 30px;
             border-radius: 14px;
-            box-shadow: 0 2px 12px #00000014;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
         h1 {
             text-align:center;
             color:#222;
-            font-size:24px;
         }
         .tip {
-            color:#555;
             text-align:center;
             margin-bottom:24px;
+            color:#555;
         }
         .radio-line {
             margin-bottom:20px;
@@ -66,37 +65,60 @@
         button:hover {
             background:#2563eb;
         }
+        .success {
+            color:#22a75d;
+            text-align:center;
+            font-size:18px;
+            display:none;
+        }
     </style>
 </head>
 <body>
 <div class="box">
     <h1>班级意见反馈平台</h1>
-    <div class="tip">你可以选择匿名或者实名提交，所有反馈我都会查看并跟进</div>
+    <div class="tip">你可以选择匿名或者实名提交，所有意见我都会查看跟进</div>
 
-    <form action="https://formsubmit.co/85992dce01d8ba7cf852ad5688bde794" method="POST">
-        <!-- 提交成功跳转到提示文字页面 -->
-        <input type="hidden" name="_redirect" value="https://hydrologic0306.github.io/class-feedback-platform/?ok=1">
-        <input type="hidden" name="_autoresponse" value="">
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
+        <input type="hidden" name="subject" value="班级新反馈">
 
         <div class="radio-line">
             <p>提交方式：</p>
             <input type="radio" id="anonymous" name="type" value="匿名反馈" checked>
             <label for="anonymous">匿名提交（不填写姓名）</label>
             <input type="radio" id="realname" name="type" value="实名反馈">
-            <label for="realname">实名提交（留下姓名，方便后续沟通）</label>
+            <label for="realname">实名提交（留下姓名，方便沟通）</label>
         </div>
 
         <label for="name">姓名（匿名可以留空）</label>
         <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
 
         <label for="contact">联系方式（可选）</label>
-        <input type="text" name="contact" id="contact" placeholder="QQ/微信，方便我回复你">
+        <input type="text" name="contact" id="contact" placeholder="QQ/微信，想回复你的话填写">
 
         <label for="message">反馈内容（必填）</label>
-        <textarea name="message" id="message" placeholder="写下你的建议、问题或者想法..." required></textarea>
+        <textarea name="message" id="message" placeholder="写下你的建议、想法、问题..." required></textarea>
 
         <button type="submit">提交反馈</button>
     </form>
+    <div class="success" id="msg">✅ 提交成功！感谢你的反馈</div>
 </div>
+
+<script>
+const form = document.querySelector('form');
+form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const formData = new FormData(form);
+    const res = await fetch(form.action, {
+        method: form.method,
+        body: formData
+    });
+    const result = await res.json();
+    if(result.success){
+        document.getElementById('msg').style.display="block";
+        form.reset();
+    }
+})
+</script>
 </body>
 </html>
