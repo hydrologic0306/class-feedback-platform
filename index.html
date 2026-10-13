@@ -3,105 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>班级意见反馈平台</title>
+    <title>会计264专属班级班委意见反馈平台</title>
     <style>
         * {
             box-sizing: border-box;
-            font-family: system-ui, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
         body {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 0 20px;
-            background-color: #f7f8fa;
+            margin: 0;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #f7f3ff 100%);
+            min-height: 100vh;
         }
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
         }
-        h1 {
-            text-align:center;
-            color:#222;
+        .header-card {
+            text-align: center;
+            margin-bottom: 28px;
         }
-        .tip {
-            text-align:center;
-            margin-bottom:24px;
-            color:#555;
+        .header-card h1 {
+            font-size: 32px;
+            color: #2d3748;
+            margin:0 0 10px;
+        }
+        .header-card p {
+            color:#64748b;
+            font-size:16px;
+        }
+        .card {
+            background: #ffffff;
+            padding: 36px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: 0.3s ease;
+            margin-bottom:30px;
+        }
+        .card:hover {
+            box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top:0;
+            color:#2d3748;
+            font-size:22px;
+        }
+        /* 进度公示样式 */
+        .feedback-item {
+            display:flex;
+            justify-content:space-between;
+            padding:14px 0;
+            border-bottom:1px solid #edf2f7;
+        }
+        .feedback-item:last-child{border-bottom:none;}
+        .status-pending{
+            color:#d97706;
+            background:#fffbeb;
+            padding:4px 10px;
+            border-radius:8px;
+            font-size:14px;
+        }
+        .status-done{
+            color:#059669;
+            background:#ecfdf5;
+            padding:4px 10px;
+            border-radius:8px;
+            font-size:14px;
         }
         .radio-line {
-            margin-bottom:20px;
+            margin-bottom:24px;
+        }
+        .radio-line p {
+            font-weight:500;
+            color:#334155;
+            margin-bottom:10px;
+        }
+        .radio-item {
+            display:inline-block;
+            margin-right:24px;
+            cursor:pointer;
         }
         label {
             display:block;
-            margin-top:16px;
+            margin-top:18px;
             font-weight:500;
-            color:#333;
+            color:#334155;
         }
-        input, textarea {
+        input, select, textarea {
             width:100%;
-            padding:10px 12px;
-            margin-top:6px;
-            border:1px solid #ddd;
-            border-radius:8px;
+            padding:14px 16px;
+            margin-top:8px;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
             font-size:16px;
+            background:#fbfdff;
+            transition:0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline:none;
+            border-color:#60a5fa;
+            box-shadow:0 0 0 3px rgba(96,165,250,0.2);
         }
         textarea {
-            min-height:160px;
+            min-height:180px;
             resize:vertical;
         }
         button {
             width:100%;
-            padding:12px;
-            margin-top:22px;
-            background:#3b82f6;
+            padding:14px;
+            margin-top:24px;
+            background: linear-gradient(90deg,#3b82f6,#8b5cf6);
             color:white;
             border:none;
-            border-radius:8px;
+            border-radius:12px;
             font-size:17px;
+            font-weight:500;
             cursor:pointer;
+            transition:0.3s;
         }
         button:hover {
-            background:#2563eb;
+            opacity:0.92;
+            transform: translateY(-2px);
         }
         .success {
-            color:#22a75d;
+            color:#16a34a;
             text-align:center;
             font-size:18px;
+            font-weight:500;
+            margin-top:20px;
             display:none;
+        }
+        .footer-tip {
+            text-align:center;
+            margin-top:24px;
+            color:#718096;
+            font-size:14px;
         }
     </style>
 </head>
 <body>
-<div class="box">
-    <h1>班级意见反馈平台</h1>
-    <div class="tip">你可以选择匿名或者实名提交，所有意见我都会查看跟进</div>
+<div class="container">
+    <div class="header-card">
+        <h1>班级意见反馈平台</h1>
+        <p>你的声音，会被认真听见</p>
+    </div>
 
-    <form action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
-        <input type="hidden" name="subject" value="班级新反馈">
-
-        <div class="radio-line">
-            <p>提交方式：</p>
-            <input type="radio" id="anonymous" name="type" value="匿名反馈" checked>
-            <label for="anonymous">匿名提交（不填写姓名）</label>
-            <input type="radio" id="realname" name="type" value="实名反馈">
-            <label for="realname">实名提交（留下姓名，方便沟通）</label>
+    <!-- 反馈进度公示模块 -->
+    <div class="card">
+        <h2>📋 反馈处理进度公示</h2>
+        <div class="feedback-item">
+            <span>【示例】自习环境优化建议</span>
+            <span class="status-pending">处理中</span>
         </div>
+        <div class="feedback-item">
+            <span>【示例】班级通知发布方式优化</span>
+            <span class="status-done">已完成</span>
+        </div>
+        <div class="feedback-item">
+            <span>【示例】增加课后学习资料分享</span>
+            <span class="status-pending">处理中</span>
+        </div>
+        <p style="font-size:14px;color:#718096;margin-top:16px;">
+            提示：这里只展示汇总后的问题摘要，不会泄露任何提交人的信息。
+        </p>
+    </div>
 
-        <label for="name">姓名（匿名可以留空）</label>
-        <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
+    <!-- 分类意见提交表单 -->
+    <div class="card">
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
+            <input type="hidden" name="subject" value="班级新反馈">
 
-        <label for="contact">联系方式（可选）</label>
-        <input type="text" name="contact" id="contact" placeholder="QQ/微信，想回复你的话填写">
+            <label for="category">反馈分类</label>
+            <select name="category" id="category" required>
+                <option value="">请选择分类</option>
+                <option value="班级活动建议">📢 班级活动建议</option>
+                <option value="学习相关">📚 学习相关（自习、作业、课程）</option>
+                <option value="班级管理">🧩 班级管理意见（通知、卫生、纪律）</option>
+                <option value="其他想法">💬 其他想法/倾诉</option>
+            </select>
 
-        <label for="message">反馈内容（必填）</label>
-        <textarea name="message" id="message" placeholder="写下你的建议、想法、问题..." required></textarea>
+            <div class="radio-line">
+                <p>提交方式</p>
+                <label class="radio-item">
+                    <input type="radio" name="type" value="匿名反馈" checked> 匿名反馈
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="type" value="实名反馈"> 实名反馈
+                </label>
+            </div>
 
-        <button type="submit">提交反馈</button>
-    </form>
-    <div class="success" id="msg">✅ 提交成功！感谢你的反馈</div>
+            <label for="name">姓名（匿名可以留空）</label>
+            <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
+
+            <label for="contact">联系方式（选填）</label>
+            <input type="text" name="contact" id="contact" placeholder="想收到回复可以填写QQ">
+
+            <label for="message">你的意见 / 建议（必填）</label>
+            <textarea name="message" id="message" placeholder="写下你的想法..." required></textarea>
+
+            <button type="submit">提交反馈</button>
+        </form>
+        <div class="success" id="msg">✅ 提交成功！感谢你的反馈</div>
+    </div>
+
+    <div class="footer-tip">
+        所有反馈只有我可以查看，会妥善处理大家提出的问题
+    </div>
 </div>
 
 <script>
