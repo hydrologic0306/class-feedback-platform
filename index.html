@@ -6,129 +6,116 @@
     <title>班级意见反馈平台</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
         body {
-            min-height: 100vh;
+            margin: 0;
             padding: 40px 20px;
-            /* 柔和淡紫渐变背景，和截图风格一致 */
-            background: linear-gradient(145deg, #eef2ff, #f5f0ff);
+            background: linear-gradient(135deg, #f0f4ff 0%, #f7f3ff 100%);
+            min-height: 100vh;
         }
         .container {
             max-width: 680px;
             margin: 0 auto;
         }
-        .header {
+        .header-card {
             text-align: center;
-            margin-bottom: 32px;
-        }
-        .header h1 {
-            font-size: 34px;
-            color: #1f2937;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .header p {
-            color: #6b7280;
-            font-size: 16px;
-        }
-        /* ✨ 毛玻璃卡片核心样式（截图同款极简高级UI） */
-        .glass-card {
-            background: rgba(255,255,255,0.55);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255,255,255,0.7);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(100, 100, 160, 0.08);
-            padding: 32px;
             margin-bottom: 28px;
-            transition: all 0.3s ease;
         }
-        .glass-card:hover {
-            box-shadow: 0 12px 40px rgba(100, 100, 160, 0.12);
+        .header-card h1 {
+            font-size: 32px;
+            color: #2d3748;
+            margin:0 0 10px;
         }
-        .glass-card h2 {
-            font-size: 22px;
-            color:#1f2937;
-            margin-bottom:20px;
-            font-weight:600;
+        .header-card p {
+            color:#64748b;
+            font-size:16px;
         }
-        /* 进度公示条目 */
+        .card {
+            background: #ffffff;
+            padding: 36px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: 0.3s ease;
+            margin-bottom:30px;
+        }
+        .card:hover {
+            box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top:0;
+            color:#2d3748;
+            font-size:22px;
+        }
+        /* 进度公示样式 */
         .feedback-item {
             display:flex;
             justify-content:space-between;
-            align-items:center;
             padding:14px 0;
-            border-bottom:1px solid rgba(0,0,0,0.06);
+            border-bottom:1px solid #edf2f7;
         }
         .feedback-item:last-child{border-bottom:none;}
         .status-pending{
-            color:#b45309;
-            background:rgba(251, 191, 36, 0.12);
+            color:#d97706;
+            background:#fffbeb;
             padding:4px 10px;
-            border-radius:99px;
+            border-radius:8px;
             font-size:14px;
         }
         .status-done{
-            color:#047857;
-            background:rgba(16, 185, 129, 0.12);
+            color:#059669;
+            background:#ecfdf5;
             padding:4px 10px;
-            border-radius:99px;
+            border-radius:8px;
             font-size:14px;
         }
-        .tip-text{
-            font-size:14px;
-            color:#6b7280;
-            margin-top:16px;
-            line-height:1.5;
+        .radio-line {
+            margin-bottom:24px;
+        }
+        .radio-line p {
+            font-weight:500;
+            color:#334155;
+            margin-bottom:10px;
+        }
+        .radio-item {
+            display:inline-block;
+            margin-right:24px;
+            cursor:pointer;
         }
         label {
             display:block;
-            margin-top:20px;
+            margin-top:18px;
             font-weight:500;
-            color:#1f2937;
-            margin-bottom:8px;
+            color:#334155;
         }
         input, select, textarea {
             width:100%;
             padding:14px 16px;
-            border-radius:16px;
-            border:1px solid rgba(0,0,0,0.08);
-            background:rgba(255,255,255,0.7);
+            margin-top:8px;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
             font-size:16px;
-            transition:0.25s;
-            outline:none;
+            background:#fbfdff;
+            transition:0.2s;
         }
         input:focus, select:focus, textarea:focus {
-            border-color:#a78bfa;
-            box-shadow:0 0 0 4px rgba(167, 139, 250, 0.15);
+            outline:none;
+            border-color:#60a5fa;
+            box-shadow:0 0 0 3px rgba(96,165,250,0.2);
         }
         textarea {
-            min-height:160px;
+            min-height:180px;
             resize:vertical;
-        }
-        .radio-group {
-            margin-top:20px;
-            display:flex;
-            gap:24px;
-        }
-        .radio-item {
-            display:flex;
-            align-items:center;
-            gap:6px;
-            cursor:pointer;
         }
         button {
             width:100%;
-            padding:15px;
+            padding:14px;
             margin-top:24px;
+            background: linear-gradient(90deg,#3b82f6,#8b5cf6);
+            color:white;
             border:none;
-            border-radius:16px;
-            background:linear-gradient(135deg,#8b5cf6,#6366f1);
-            color:#fff;
+            border-radius:12px;
             font-size:17px;
             font-weight:500;
             cursor:pointer;
@@ -139,31 +126,30 @@
             transform: translateY(-2px);
         }
         .success {
-            margin-top:20px;
+            color:#16a34a;
             text-align:center;
-            font-size:17px;
+            font-size:18px;
             font-weight:500;
-            color:#047857;
+            margin-top:20px;
             display:none;
-            line-height:1.6;
         }
-        .footer-text {
+        .footer-tip {
             text-align:center;
-            color:#6b7280;
+            margin-top:24px;
+            color:#718096;
             font-size:14px;
-            margin-top:10px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <div class="header-card">
         <h1>班级意见反馈平台</h1>
         <p>你的声音，会被认真听见</p>
     </div>
 
-    <!-- 📋 反馈进度公示看板（毛玻璃卡片） -->
-    <div class="glass-card">
+    <!-- 反馈进度公示模块 -->
+    <div class="card">
         <h2>📋 反馈处理进度公示</h2>
         <div class="feedback-item">
             <span>【示例#001】自习环境优化建议</span>
@@ -177,11 +163,13 @@
             <span>【示例#003】增加课后学习资料分享</span>
             <span class="status-pending">处理中</span>
         </div>
-        <p class="tip-text">提示：提交建议后请保存工单编号，可在此页面查看处理进度，公示只展示摘要，保护隐私。</p>
+        <p style="font-size:14px;color:#718096;margin-top:16px;">
+            提示：提交建议后请保存工单编号，可在此页面查看处理进度，公示只展示摘要，保护隐私。
+        </p>
     </div>
 
-    <!-- 📝 反馈表单卡片 -->
-    <div class="glass-card">
+    <!-- 分类意见提交表单 -->
+    <div class="card">
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
             <input type="hidden" name="subject" value="班级新反馈">
@@ -196,15 +184,14 @@
                 <option value="其他想法">💬 其他想法/倾诉</option>
             </select>
 
-            <div class="radio-group">
-                <div class="radio-item">
-                    <input type="radio" name="type" value="匿名反馈" checked id="anon">
-                    <label for="anon">匿名反馈</label>
-                </div>
-                <div class="radio-item">
-                    <input type="radio" name="type" value="实名反馈" id="real">
-                    <label for="real">实名反馈</label>
-                </div>
+            <div class="radio-line">
+                <p>提交方式</p>
+                <label class="radio-item">
+                    <input type="radio" name="type" value="匿名反馈" checked> 匿名反馈
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="type" value="实名反馈"> 实名反馈
+                </label>
             </div>
 
             <label for="name">姓名（匿名可以留空）</label>
@@ -221,7 +208,9 @@
         <div class="success" id="msg"></div>
     </div>
 
-    <p class="footer-text">所有反馈只有我可以查看，会妥善处理大家提出的问题</p>
+    <div class="footer-tip">
+        所有反馈只有我可以查看，会妥善处理大家提出的问题
+    </div>
 </div>
 
 <script>
@@ -247,6 +236,7 @@ form.addEventListener('submit', async function(e){
         msgBox.style.display="block";
         msgBox.innerHTML = `✅ 提交成功！你的工单编号：<strong>${tid}</strong><br>请保存编号，可在上方公示板查看处理进度。`;
         form.reset();
+        // 生成下一个工单
         tid = genTicketID();
         document.getElementById('ticket_id').value = tid;
     }else{
