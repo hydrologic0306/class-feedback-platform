@@ -1,399 +1,325 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>会计264班级专属反馈平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>班级意见反馈平台</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Microsoft YaHei", PingFang SC, sans-serif;
-}
-body {
-  background: linear-gradient(135deg, #baf7e9, #cbf8e2, #e2fcf0);
-  padding: 32px 24px;
-  color:#1c424b;
-}
-.container {
-  max-width: 920px;
-  margin:0 auto;
-}
-/* 顶部 */
-.header-top{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:16px;
-}
-.left-top-text{
-  font-size:12px;
-  color:#235058;
-}
-.right-top-text{
-  font-size:12px;
-  color:#235058;
-}
-h1{
-  font-size:28px;
-  font-weight:600;
-  margin-bottom:6px;
-}
-.sub-heading{
-  font-size:14px;
-  color:#34646c;
-  margin-bottom:28px;
-}
-/* 玻璃卡片通用 */
-.glass-card{
-  background:rgba(255,255,255,0.26);
-  border-radius:24px;
-  padding:24px;
-  border:1px solid rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  margin-bottom:20px;
-}
-.card-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  margin-bottom:16px;
-}
-.card-title-row h2{
-  font-size:18px;
-  font-weight:600;
-}
-.card-desc{
-  font-size:12px;
-  color:#447279;
-  margin-top:4px;
-}
-.tag-demo{
-  font-size:11px;
-  background:rgba(255,255,255,0.4);
-  padding:2px 6px;
-  border-radius:6px;
-}
-.badge-done{
-  font-size:12px;
-  background:rgba(255,255,255,0.38);
-  padding:3px 9px;
-  border-radius:99px;
-}
-/* 工单三栏 */
-.ticket-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:14px;
-}
-.ticket-item{
-  background:rgba(255,255,255,0.28);
-  border-radius:20px;
-  padding:16px;
-}
-.ticket-head{
-  display:flex;
-  justify-content:space-between;
-  font-size:11px;
-  margin-bottom:8px;
-}
-.ticket-id{
-  color:#224c54;
-}
-.ticket-status{
-  background:rgba(255,255,255,0.35);
-  padding:2px 7px;
-  border-radius:99px;
-}
-.ticket-category{
-  font-size:12px;
-  color:#34646c;
-  margin-bottom:8px;
-}
-.ticket-content{
-  font-size:13px;
-  line-height:1.45;
-  margin-bottom:10px;
-}
-.ticket-reply{
-  background:rgba(255,255,255,0.32);
-  border-radius:14px;
-  padding:10px;
-  font-size:12px;
-  line-height:1.45;
-}
-.tip-bottom-small{
-  margin-top:12px;
-  font-size:11px;
-  color:#447279;
-}
-
-/* 表单区域 */
-.form-row{
-  margin-bottom:18px;
-}
-.form-row label{
-  display:block;
-  font-size:13px;
-  margin-bottom:7px;
-}
-.form-side-tip{
-  float:right;
-  font-size:11px;
-  color:#447279;
-}
-.radio-wrap{
-  display:flex;
-  gap:22px;
-}
-.radio-item{
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-input[type="text"],select,textarea{
-  width:100%;
-  border:1px solid rgba(255,255,255,0.55);
-  background:rgba(255,255,255,0.34);
-  border-radius:16px;
-  padding:12px 14px;
-  font-size:14px;
-  outline:none;
-}
-textarea{
-  min-height:145px;
-  resize:none;
-}
-.word-count{
-  float:right;
-  font-size:11px;
-  color:#447279;
-}
-.form-bottom-bar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.form-bottom-tip{
-  font-size:12px;
-  color:#447279;
-}
-.submit-btn{
-  padding:10px 16px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.55);
-  background:rgba(255,255,255,0.4);
-  cursor:pointer;
-}
-
-/* 底部小样区域 */
-.demo-title-text{
-  font-size:12px;
-  color:#34646c;
-  margin:30px 0 14px;
-  display:flex;
-  justify-content:space-between;
-}
-.demo-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:14px;
-}
-.demo-card{
-  background:rgba(255,255,255,0.26);
-  border:1px solid rgba(255,255,255,0.55);
-  border-radius:22px;
-  padding:16px;
-}
-.demo-card h4{
-  font-size:12px;
-  margin-bottom:10px;
-  font-weight:500;
-}
-footer{
-  text-align:center;
-  margin-top:32px;
-  font-size:11px;
-  color:#447279;
-}
-#nameField{
-  display:none;
-}
-@media (max-width:768px){
-  .ticket-grid,.demo-grid{
-    grid-template-columns:1fr;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-}
+
+  body {
+    min-height: 100vh;
+    padding: 56px 20px 48px;
+    background: linear-gradient(160deg, #e8f5ee 0%, #f1f8f4 45%, #e6f4ed 100%);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+    line-height: 1.35;
+    color: #14532d;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    color: #4b7054;
+    font-size: 16px;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 28px;
+    box-shadow: 0 10px 34px rgba(34, 120, 70, 0.08);
+    padding: 36px;
+    margin-bottom: 32px;
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 16px 44px rgba(34, 120, 70, 0.12);
+  }
+
+  .glass-card h2 {
+    font-size: 21px;
+    color: #14532d;
+    margin-bottom: 22px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .feedback-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 4px;
+    border-bottom: 1px solid rgba(20, 83, 45, 0.08);
+  }
+
+  .feedback-item:last-child {
+    border-bottom: none;
+  }
+
+  .feedback-item span:first-child {
+    color: #1f2937;
+    font-size: 15px;
+  }
+
+  .status-pending {
+    color: #8a5a00;
+    background: rgba(255, 211, 102, 0.18);
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .status-done {
+    color: #0f5132;
+    background: rgba(109, 214, 145, 0.22);
+    padding: 5px 12px;
+    border-radius: 99px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .tip-text {
+    font-size: 14px;
+    color: #4b7054;
+    margin-top: 18px;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 16px;
+    padding: 14px 16px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: 500;
+    color: #14532d;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(20, 83, 45, 0.12);
+    background: rgba(255, 255, 255, 0.72);
+    font-size: 15px;
+    transition: 0.25s;
+    outline: none;
+    color: #1f2937;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: #4ade80;
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+  }
+
+  textarea {
+    min-height: 170px;
+    resize: vertical;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(20, 83, 45, 0.08);
+  }
+
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #1f2937;
+    font-size: 15px;
+  }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.22);
+  }
+
+  button:hover {
+    opacity: 0.94;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(16, 185, 129, 0.28);
+  }
+
+  .success {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0f5132;
+    background: rgba(109, 214, 145, 0.18);
+    border: 1px solid rgba(109, 214, 145, 0.35);
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: none;
+    line-height: 1.7;
+  }
+
+  .footer-text {
+    text-align: center;
+    color: #4b7054;
+    font-size: 14px;
+    margin-top: 8px;
+  }
 </style>
 </head>
+
 <body>
 <div class="container">
-  <div class="header-top">
-    <div class="left-top-text">C / 轻盈玻璃式</div>
-    <div class="right-top-text">CLASS 264 / 2026</div>
-  </div>
-  <h1>会计264班级专属反馈平台</h1>
-  <div class="sub-heading">让每一个想法被听见，让每一次反馈有回应。<span style="float:right;font-size:12px;">倾听 · 记录 · 回应</span></div>
-
-  <!-- 反馈进度公示卡片 -->
-  <div class="glass-card">
-    <div class="card-head">
-      <div class="card-title-row">
-        <h2>反馈进度公示 <span class="tag-demo">示例数据</span></h2>
-        <div class="card-desc">仅展示已办结工单，内容已脱敏，不公示提交人信息。</div>
-      </div>
-      <div class="badge-done">已办结 03</div>
-    </div>
-    <div class="ticket-grid">
-      <div class="ticket-item">
-        <div class="ticket-head">
-          <span class="ticket-id">FB-2026-018</span>
-          <span class="ticket-status">已办结</span>
-        </div>
-        <div class="ticket-category">班级活动建议</div>
-        <div class="ticket-content">建议组织一次班级旧书交换活动。</div>
-        <div class="ticket-reply">
-          <b>班委回复</b><br/>
-          已安排在下周班会后开展，活动通知将同步至班级群。
-        </div>
-      </div>
-      <div class="ticket-item">
-        <div class="ticket-head">
-          <span class="ticket-id">FB-2026-016</span>
-          <span class="ticket-status">已办结</span>
-        </div>
-        <div class="ticket-category">学习相关(自习、作业、课程)</div>
-        <div class="ticket-content">希望汇总本课程的作业与截止时间。</div>
-        <div class="ticket-reply">
-          <b>班委回复</b><br/>
-          学习委员已建立每周作业清单，每周一更新至群公告。
-        </div>
-      </div>
-      <div class="ticket-item">
-        <div class="ticket-head">
-          <span class="ticket-id">FB-2026-012</span>
-          <span class="ticket-status">已办结</span>
-        </div>
-        <div class="ticket-category">班级管理意见（通知、卫生、纪律）</div>
-        <div class="ticket-content">建议重要通知统一置顶，方便查找。</div>
-        <div class="ticket-reply">
-          <b>班委回复</b><br/>
-          已启用群公告汇总，重要通知将标注日期并及时置顶。
-        </div>
-      </div>
-    </div>
-    <div class="tip-bottom-small">以上工单仅作界面示例，不代表真实办理记录。</div>
+  <div class="header">
+    <h1>会计264专属班级班委意见反馈平台</h1>
+    <p>你的声音，会被认真听见</p>
   </div>
 
-  <!-- 意见反馈表单 -->
   <div class="glass-card">
-    <div class="card-head">
-      <div class="card-title-row">
-        <h2>意见反馈</h2>
-        <div class="card-desc">关于班级的建议、学习的困惑，或只是想说的话，都可以写在这里。</div>
-      </div>
-      <span style="font-size:12px;color:#447279">认真倾听每一个声音</span>
+    <h2>📋 反馈处理进度公示</h2>
+    <div class="feedback-item">
+      <span>【示例#000】班级通知发布方式优化</span>
+      <span class="status-done">已完成</span>
     </div>
-    <form id="formFeedback">
-      <div class="form-row">
-        <label>反馈方式 <span class="form-side-tip">可自由选择是否公开姓名</span></label>
-        <div class="radio-wrap">
-          <div class="radio-item">
-            <input type="radio" name="type" id="anony" value="anonymous" onclick="hideName()">
-            <label for="anony">匿名</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" name="type" id="real" value="real" checked onclick="showName()">
-            <label for="real">实名</label>
-          </div>
-        </div>
-      </div>
+    <p class="tip-text">
+      提示：提交建议后请保存工单编号，可在此页面查看处理进度，公示只展示摘要，保护隐私。
+    </p>
+  </div>
 
-      <div class="form-row" id="nameField">
-        <label>姓名 <span class="form-side-tip">仅班委反馈时填写，不在公示中展示</span></label>
-        <input placeholder="请输入你的姓名">
-      </div>
+  <div class="glass-card">
+    <form action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d" />
+      <input type="hidden" name="subject" value="班级新反馈" />
+      <input type="hidden" id="ticket_id" name="工单编号" />
 
-      <div class="form-row">
-        <label>反馈所属分类 <span class="form-side-tip">请勿填写他人的个人隐私信息</span></label>
-        <select>
-          <option>班级活动建议</option>
-          <option>学习相关(自习、作业、课程)</option>
-          <option>班级管理意见（通知、卫生、纪律）</option>
-          <option>其他想法/倾诉</option>
+      <div>
+        <label for="category">反馈分类</label>
+        <select name="category" id="category" required>
+          <option value="">请选择分类</option>
+          <option value="班级活动建议">📢 班级活动建议</option>
+          <option value="学习相关">📚 学习相关（自习、作业、课程）</option>
+          <option value="班级管理">🧩 班级管理意见（通知、卫生、纪律）</option>
+          <option value="其他想法">💬 其他想法/倾诉</option>
         </select>
       </div>
 
-      <div class="form-row">
-        <label>具体意见内容 <span class="word-count">0 / 1000</span></label>
-        <textarea placeholder="写下你的想法，也可以说说你期待的改变……"></textarea>
+      <div>
+        <label>反馈方式</label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" name="type" value="匿名反馈" checked id="anon" />
+            <label for="anon">匿名反馈</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" name="type" value="实名反馈" id="real" />
+            <label for="real">实名反馈</label>
+          </div>
+        </div>
       </div>
 
-      <div class="form-bottom-bar">
-        <div class="form-bottom-tip">🔒 内容仅供班委处理，公示前会进行脱敏。</div>
-        <button type="submit" class="submit-btn">提交反馈 →</button>
+      <div>
+        <label for="name">姓名（匿名可以留空）</label>
+        <input type="text" name="name" id="name" placeholder="匿名提交不用填写" />
       </div>
+
+      <div>
+        <label for="contact">联系方式（选填）</label>
+        <input type="text" name="contact" id="contact" placeholder="想收到回复可以填写QQ" />
+      </div>
+
+      <div>
+        <label for="message">你的意见 / 建议（必填）</label>
+        <textarea name="message" id="message" placeholder="写下你的想法..." required></textarea>
+      </div>
+
+      <button type="submit">提交反馈</button>
     </form>
+
+    <div class="success" id="msg"></div>
   </div>
 
-  <!-- 交互小样区域 -->
-  <div class="demo-title-text">
-    <span>交互状态小样</span>
-    <span>静态展示 · 非额外页面</span>
-  </div>
-  <div class="demo-grid">
-    <div class="demo-card">
-      <h4>匿名 / 姓名字段隐藏</h4>
-      <div class="radio-wrap">
-        <div class="radio-item">
-          <input type="radio" name="demo1" checked>
-          <label>匿名</label>
-        </div>
-        <div class="radio-item">
-          <input type="radio" name="demo1">
-          <label>实名</label>
-        </div>
-      </div>
-      <div style="margin-top:10px;">
-        <label style="font-size:12px;">反馈所属分类</label>
-        <select style="margin-top:4px;">
-          <option>请选择反馈分类</option>
-        </select>
-        <p style="font-size:11px;margin-top:4px;color:#447279">选择匿名后，直接进入分类选择，无需填写姓名。</p>
-      </div>
-    </div>
-    <div class="demo-card">
-      <h4>分类 / 下拉展开</h4>
-      <select>
-        <option>班级活动建议</option>
-        <option>学习相关(自习、作业、课程)</option>
-        <option>班级管理意见（通知、卫生、纪律）</option>
-        <option>其他想法/倾诉</option>
-      </select>
-    </div>
-    <div class="demo-card">
-      <h4>提交 / 柔和提亮</h4>
-      <button class="submit-btn">提交反馈 →</button>
-      <button class="submit-btn" style="margin-top:8px;background:rgba(255,230,190,0.45)">提交反馈 →</button>
-      <p style="font-size:11px;margin-top:4px;color:#447279">悬停时提高透明度，保留轻柔光晕与清晰文字。</p>
-    </div>
-  </div>
-
-  <footer>©2026 会计264班级反馈平台 | Design by 郝韶茜.</footer>
+  <p class="footer-text">所有反馈只有我可以查看，会妥善处理大家提出的问题</p>
 </div>
 
 <script>
-function showName(){
-  document.getElementById("nameField").style.display="block";
-}
-function hideName(){
-  document.getElementById("nameField").style.display="none";
-}
-document.getElementById("formFeedback").addEventListener("submit",e=>{
-  e.preventDefault();
-  alert("提交成功，已生成工单编号！");
-})
+  function genTicketID() {
+    return '#' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+  }
+
+  let tid = genTicketID();
+  document.getElementById('ticket_id').value = tid;
+
+  const form = document.querySelector('form');
+  const msgBox = document.getElementById('msg');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const res = await fetch(form.action, {
+      method: form.method,
+      body: formData
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      msgBox.style.display = "block";
+      msgBox.innerHTML = `✅ 提交成功！你的工单编号：<strong>${tid}</strong><br>请保存编号，可在上方公示板查看处理进度。`;
+      form.reset();
+      tid = genTicketID();
+      document.getElementById('ticket_id').value = tid;
+    } else {
+      msgBox.style.display = "block";
+      msgBox.innerHTML = "❌ 提交失败，请稍后重试";
+    }
+  });
 </script>
 </body>
 </html>
