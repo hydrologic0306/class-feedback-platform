@@ -1,325 +1,259 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>班级意见反馈平台</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  }
-
-  body {
-    min-height: 100vh;
-    padding: 56px 20px 48px;
-    background: linear-gradient(160deg, #e8f5ee 0%, #f1f8f4 45%, #e6f4ed 100%);
-  }
-
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .header h1 {
-    font-size: 30px;
-    line-height: 1.35;
-    color: #14532d;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-
-  .header p {
-    color: #4b7054;
-    font-size: 16px;
-  }
-
-  .glass-card {
-    background: rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    border-radius: 28px;
-    box-shadow: 0 10px 34px rgba(34, 120, 70, 0.08);
-    padding: 36px;
-    margin-bottom: 32px;
-    transition: all 0.3s ease;
-  }
-
-  .glass-card:hover {
-    box-shadow: 0 16px 44px rgba(34, 120, 70, 0.12);
-  }
-
-  .glass-card h2 {
-    font-size: 21px;
-    color: #14532d;
-    margin-bottom: 22px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .feedback-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 4px;
-    border-bottom: 1px solid rgba(20, 83, 45, 0.08);
-  }
-
-  .feedback-item:last-child {
-    border-bottom: none;
-  }
-
-  .feedback-item span:first-child {
-    color: #1f2937;
-    font-size: 15px;
-  }
-
-  .status-pending {
-    color: #8a5a00;
-    background: rgba(255, 211, 102, 0.18);
-    padding: 5px 12px;
-    border-radius: 99px;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-
-  .status-done {
-    color: #0f5132;
-    background: rgba(109, 214, 145, 0.22);
-    padding: 5px 12px;
-    border-radius: 99px;
-    font-size: 13px;
-    flex-shrink: 0;
-  }
-
-  .tip-text {
-    font-size: 14px;
-    color: #4b7054;
-    margin-top: 18px;
-    line-height: 1.6;
-    background: rgba(255, 255, 255, 0.45);
-    border-radius: 16px;
-    padding: 14px 16px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  label {
-    display: block;
-    font-weight: 500;
-    color: #14532d;
-    margin-bottom: 8px;
-    font-size: 15px;
-  }
-
-  input,
-  select,
-  textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 16px;
-    border: 1px solid rgba(20, 83, 45, 0.12);
-    background: rgba(255, 255, 255, 0.72);
-    font-size: 15px;
-    transition: 0.25s;
-    outline: none;
-    color: #1f2937;
-  }
-
-  input:focus,
-  select:focus,
-  textarea:focus {
-    border-color: #4ade80;
-    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
-  }
-
-  textarea {
-    min-height: 170px;
-    resize: vertical;
-  }
-
-  .radio-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 16px 18px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(20, 83, 45, 0.08);
-  }
-
-  .radio-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    color: #1f2937;
-    font-size: 15px;
-  }
-
-  button {
-    width: 100%;
-    padding: 16px;
-    margin-top: 8px;
-    border: none;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #34d399, #10b981);
-    color: #fff;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.22);
-  }
-
-  button:hover {
-    opacity: 0.94;
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(16, 185, 129, 0.28);
-  }
-
-  .success {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    color: #0f5132;
-    background: rgba(109, 214, 145, 0.18);
-    border: 1px solid rgba(109, 214, 145, 0.35);
-    border-radius: 18px;
-    padding: 18px 20px;
-    display: none;
-    line-height: 1.7;
-  }
-
-  .footer-text {
-    text-align: center;
-    color: #4b7054;
-    font-size: 14px;
-    margin-top: 8px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级意见反馈平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            padding: 40px 20px;
+            /* 柔和淡紫渐变背景，和截图风格一致 */
+            background: linear-gradient(145deg, #eef2ff, #f5f0ff);
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .header h1 {
+            font-size: 34px;
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+        /* ✨ 毛玻璃卡片核心样式（截图同款极简高级UI） */
+        .glass-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(100, 100, 160, 0.08);
+            padding: 32px;
+            margin-bottom: 28px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 12px 40px rgba(100, 100, 160, 0.12);
+        }
+        .glass-card h2 {
+            font-size: 22px;
+            color:#1f2937;
+            margin-bottom:20px;
+            font-weight:600;
+        }
+        /* 进度公示条目 */
+        .feedback-item {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:14px 0;
+            border-bottom:1px solid rgba(0,0,0,0.06);
+        }
+        .feedback-item:last-child{border-bottom:none;}
+        .status-pending{
+            color:#b45309;
+            background:rgba(251, 191, 36, 0.12);
+            padding:4px 10px;
+            border-radius:99px;
+            font-size:14px;
+        }
+        .status-done{
+            color:#047857;
+            background:rgba(16, 185, 129, 0.12);
+            padding:4px 10px;
+            border-radius:99px;
+            font-size:14px;
+        }
+        .tip-text{
+            font-size:14px;
+            color:#6b7280;
+            margin-top:16px;
+            line-height:1.5;
+        }
+        label {
+            display:block;
+            margin-top:20px;
+            font-weight:500;
+            color:#1f2937;
+            margin-bottom:8px;
+        }
+        input, select, textarea {
+            width:100%;
+            padding:14px 16px;
+            border-radius:16px;
+            border:1px solid rgba(0,0,0,0.08);
+            background:rgba(255,255,255,0.7);
+            font-size:16px;
+            transition:0.25s;
+            outline:none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color:#a78bfa;
+            box-shadow:0 0 0 4px rgba(167, 139, 250, 0.15);
+        }
+        textarea {
+            min-height:160px;
+            resize:vertical;
+        }
+        .radio-group {
+            margin-top:20px;
+            display:flex;
+            gap:24px;
+        }
+        .radio-item {
+            display:flex;
+            align-items:center;
+            gap:6px;
+            cursor:pointer;
+        }
+        button {
+            width:100%;
+            padding:15px;
+            margin-top:24px;
+            border:none;
+            border-radius:16px;
+            background:linear-gradient(135deg,#8b5cf6,#6366f1);
+            color:#fff;
+            font-size:17px;
+            font-weight:500;
+            cursor:pointer;
+            transition:0.3s;
+        }
+        button:hover {
+            opacity:0.92;
+            transform: translateY(-2px);
+        }
+        .success {
+            margin-top:20px;
+            text-align:center;
+            font-size:17px;
+            font-weight:500;
+            color:#047857;
+            display:none;
+            line-height:1.6;
+        }
+        .footer-text {
+            text-align:center;
+            color:#6b7280;
+            font-size:14px;
+            margin-top:10px;
+        }
+    </style>
 </head>
-
 <body>
 <div class="container">
-  <div class="header">
-    <h1>会计264专属班级班委意见反馈平台</h1>
-    <p>你的声音，会被认真听见</p>
-  </div>
-
-  <div class="glass-card">
-    <h2>📋 反馈处理进度公示</h2>
-    <div class="feedback-item">
-      <span>【示例#000】班级通知发布方式优化</span>
-      <span class="status-done">已完成</span>
+    <div class="header">
+        <h1>班级意见反馈平台</h1>
+        <p>你的声音，会被认真听见</p>
     </div>
-    <p class="tip-text">
-      提示：提交建议后请保存工单编号，可在此页面查看处理进度，公示只展示摘要，保护隐私。
-    </p>
-  </div>
 
-  <div class="glass-card">
-    <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d" />
-      <input type="hidden" name="subject" value="班级新反馈" />
-      <input type="hidden" id="ticket_id" name="工单编号" />
-
-      <div>
-        <label for="category">反馈分类</label>
-        <select name="category" id="category" required>
-          <option value="">请选择分类</option>
-          <option value="班级活动建议">📢 班级活动建议</option>
-          <option value="学习相关">📚 学习相关（自习、作业、课程）</option>
-          <option value="班级管理">🧩 班级管理意见（通知、卫生、纪律）</option>
-          <option value="其他想法">💬 其他想法/倾诉</option>
-        </select>
-      </div>
-
-      <div>
-        <label>反馈方式</label>
-        <div class="radio-group">
-          <div class="radio-item">
-            <input type="radio" name="type" value="匿名反馈" checked id="anon" />
-            <label for="anon">匿名反馈</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" name="type" value="实名反馈" id="real" />
-            <label for="real">实名反馈</label>
-          </div>
+    <!-- 📋 反馈进度公示看板（毛玻璃卡片） -->
+    <div class="glass-card">
+        <h2>📋 反馈处理进度公示</h2>
+        <div class="feedback-item">
+            <span>【示例#001】自习环境优化建议</span>
+            <span class="status-pending">处理中</span>
         </div>
-      </div>
+        <div class="feedback-item">
+            <span>【示例#002】班级通知发布方式优化</span>
+            <span class="status-done">已完成</span>
+        </div>
+        <div class="feedback-item">
+            <span>【示例#003】增加课后学习资料分享</span>
+            <span class="status-pending">处理中</span>
+        </div>
+        <p class="tip-text">提示：提交建议后请保存工单编号，可在此页面查看处理进度，公示只展示摘要，保护隐私。</p>
+    </div>
 
-      <div>
-        <label for="name">姓名（匿名可以留空）</label>
-        <input type="text" name="name" id="name" placeholder="匿名提交不用填写" />
-      </div>
+    <!-- 📝 反馈表单卡片 -->
+    <div class="glass-card">
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
+            <input type="hidden" name="subject" value="班级新反馈">
+            <input type="hidden" id="ticket_id" name="工单编号">
 
-      <div>
-        <label for="contact">联系方式（选填）</label>
-        <input type="text" name="contact" id="contact" placeholder="想收到回复可以填写QQ" />
-      </div>
+            <label for="category">反馈分类</label>
+            <select name="category" id="category" required>
+                <option value="">请选择分类</option>
+                <option value="班级活动建议">📢 班级活动建议</option>
+                <option value="学习相关">📚 学习相关（自习、作业、课程）</option>
+                <option value="班级管理">🧩 班级管理意见（通知、卫生、纪律）</option>
+                <option value="其他想法">💬 其他想法/倾诉</option>
+            </select>
 
-      <div>
-        <label for="message">你的意见 / 建议（必填）</label>
-        <textarea name="message" id="message" placeholder="写下你的想法..." required></textarea>
-      </div>
+            <div class="radio-group">
+                <div class="radio-item">
+                    <input type="radio" name="type" value="匿名反馈" checked id="anon">
+                    <label for="anon">匿名反馈</label>
+                </div>
+                <div class="radio-item">
+                    <input type="radio" name="type" value="实名反馈" id="real">
+                    <label for="real">实名反馈</label>
+                </div>
+            </div>
 
-      <button type="submit">提交反馈</button>
-    </form>
+            <label for="name">姓名（匿名可以留空）</label>
+            <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
 
-    <div class="success" id="msg"></div>
-  </div>
+            <label for="contact">联系方式（选填）</label>
+            <input type="text" name="contact" id="contact" placeholder="想收到回复可以填写QQ">
 
-  <p class="footer-text">所有反馈只有我可以查看，会妥善处理大家提出的问题</p>
+            <label for="message">你的意见 / 建议（必填）</label>
+            <textarea name="message" id="message" placeholder="写下你的想法..." required></textarea>
+
+            <button type="submit">提交反馈</button>
+        </form>
+        <div class="success" id="msg"></div>
+    </div>
+
+    <p class="footer-text">所有反馈只有我可以查看，会妥善处理大家提出的问题</p>
 </div>
 
 <script>
-  function genTicketID() {
-    return '#' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-  }
+// 生成6位随机工单编号
+function genTicketID(){
+    return '#' + Math.floor(Math.random()*1000000).toString().padStart(6,'0');
+}
+let tid = genTicketID();
+document.getElementById('ticket_id').value = tid;
 
-  let tid = genTicketID();
-  document.getElementById('ticket_id').value = tid;
+const form = document.querySelector('form');
+const msgBox = document.getElementById('msg');
 
-  const form = document.querySelector('form');
-  const msgBox = document.getElementById('msg');
-
-  form.addEventListener('submit', async function (e) {
+form.addEventListener('submit', async function(e){
     e.preventDefault();
-
     const formData = new FormData(form);
     const res = await fetch(form.action, {
-      method: form.method,
-      body: formData
+        method: form.method,
+        body: formData
     });
     const result = await res.json();
-
-    if (result.success) {
-      msgBox.style.display = "block";
-      msgBox.innerHTML = `✅ 提交成功！你的工单编号：<strong>${tid}</strong><br>请保存编号，可在上方公示板查看处理进度。`;
-      form.reset();
-      tid = genTicketID();
-      document.getElementById('ticket_id').value = tid;
-    } else {
-      msgBox.style.display = "block";
-      msgBox.innerHTML = "❌ 提交失败，请稍后重试";
+    if(result.success){
+        msgBox.style.display="block";
+        msgBox.innerHTML = `✅ 提交成功！你的工单编号：<strong>${tid}</strong><br>请保存编号，可在上方公示板查看处理进度。`;
+        form.reset();
+        tid = genTicketID();
+        document.getElementById('ticket_id').value = tid;
+    }else{
+        msgBox.style.display="block";
+        msgBox.innerHTML = "❌ 提交失败，请稍后重试";
     }
-  });
+})
 </script>
 </body>
 </html>
