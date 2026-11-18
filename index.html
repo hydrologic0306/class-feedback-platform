@@ -40,20 +40,26 @@
             margin: 0;
         }
 
-        /* ===== Lumno liquid glass start ===== */
-        /* Lumno's liquid glass, from Glasswork (https://www.kubai.design/glasswork/).
-           Light glass with dark ink by default; .glass.is-dark for dark glass with light ink.
-           If Safari leaves a surface with busy content undrawn, move background and
-           backdrop-filter to a ::before under the content, as glass.css in the repo does. */
-
+        /* ========== Glasswork liquid glass (Safari fixed ::before version) ========== */
         .glass {
           border-radius: 28px;
           corner-shape: superellipse(1.25);
+          position: relative;
+          overflow: visible;
+          padding: 32px;
+          margin-bottom: 28px;
+          transition: 0.3s ease;
+          color: rgb(0 0 0 / 0.86);
         }
-        /* Capsules keep round ends. */
         .glass.is-pill { border-radius: 999px; corner-shape: round; }
 
-        .glass {
+        /* Safari 修复：玻璃层放在伪元素 */
+        .glass::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          z-index: -1;
           background: rgb(235 226 255 / 0);
           -webkit-backdrop-filter: blur(2px) saturate(240%) brightness(1);
           backdrop-filter: blur(2px) saturate(240%) brightness(1) var(--glass-lens,);
@@ -67,18 +73,18 @@
             inset 4px 0 8px -6px rgb(255 255 255 / 0),
             inset -4px 0 8px -6px rgb(255 255 255 / 0),
             inset 0 -6px 8px -6px rgb(0 0 0 / 0);
-          color: rgb(0 0 0 / 0.86);
-          padding: 32px;
-          transition: 0.3s ease;
-          margin-bottom: 28px;
         }
-        .glass:hover {
+
+        .glass:hover{
             transform: translateY(-2px);
         }
         .glass > * { mix-blend-mode: multiply; }
         .glass .secondary { color: rgb(60 60 67 / 0.7); }
 
         .glass.is-dark {
+          color: rgb(255 255 255 / 0.94);
+        }
+        .glass.is-dark::before {
           background: rgb(30 30 34 / 0.241);
           -webkit-backdrop-filter: blur(2px) saturate(220%) brightness(0.8);
           backdrop-filter: blur(2px) saturate(220%) brightness(0.8) var(--glass-lens,);
@@ -92,22 +98,19 @@
             inset 4px 0 8px -6px rgb(255 255 255 / 0.07),
             inset -4px 0 8px -6px rgb(255 255 255 / 0.04),
             inset 0 -6px 8px -6px rgb(0 0 0 / 0.08);
-          color: rgb(255 255 255 / 0.94);
         }
         .glass.is-dark > * { mix-blend-mode: plus-lighter; }
         .glass.is-dark .secondary { color: rgb(235 235 245 / 0.64); }
-        /* ===== Lumno liquid glass end ===== */
+        /* =========================================================================================== */
 
         .radio-line {
             margin-bottom: 24px;
         }
-
         .radio-line p {
             font-weight: 500;
             color: #44665A;
             margin-bottom: 10px;
         }
-
         .radio-item {
             display: inline-block;
             margin-right: 24px;
@@ -121,9 +124,6 @@
             font-weight: 500;
             color: #44665A;
         }
-
-        input,
-        select,
         textarea {
             width: 100%;
             padding: 14px 16px;
@@ -135,15 +135,11 @@
             color: #355249;
             transition: 0.2s;
         }
-
-        input:focus,
-        select:focus,
         textarea:focus {
             outline: none;
             border-color: #6FA592;
             box-shadow: 0 0 0 3px rgba(111, 165, 146, 0.25);
         }
-
         textarea {
             min-height: 180px;
             resize: vertical;
@@ -162,7 +158,6 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         button:hover {
             opacity: 0.92;
             transform: translateY(-2px);
@@ -179,7 +174,6 @@
             padding: 14px;
             border-radius: 12px;
         }
-
         .footer-tip {
             text-align: center;
             margin-top: 24px;
@@ -202,7 +196,6 @@
             <p>你的声音，会被认真听见</p>
         </div>
 
-        <!-- 这里替换成 glass 类 -->
         <div class="glass">
             <form action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
@@ -224,7 +217,6 @@
 
                 <button type="submit">提交反馈</button>
             </form>
-
             <div class="success" id="msg"></div>
         </div>
 
@@ -238,26 +230,20 @@
         function genTicketID() {
             return '#' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
         }
-
         let tid = genTicketID();
         document.getElementById('ticket_id').value = tid;
 
         const form = document.querySelector('form');
         const msgBox = document.getElementById('msg');
-
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
-
             const formData = new FormData(form);
-
             try {
                 const res = await fetch(form.action, {
                     method: form.method,
                     body: formData
                 });
-
                 const result = await res.json();
-
                 if (result.success) {
                     msgBox.style.display = "block";
                     msgBox.innerHTML = `提交成功！你的工单编号：<strong>${tid}</strong><br>反馈已匿名记录，我会尽快整理课程相关建议反馈给专业老师，并根据意见改进学习委员工作。`;
@@ -275,10 +261,11 @@
         });
     </script>
 
-    <!-- Lumno liquid glass lens script -->
     <script type="module">
         import { liquidGlass } from 'https://cdn.jsdelivr.net/gh/kubai087/glasswork@v1.1.0/lens.js';
-        for (const el of document.querySelectorAll('.glass')) liquidGlass(el, { rim: 40, edge: 1.1, power: 2.6, dispersion: 0.22 });
+        for (const el of document.querySelectorAll('.glass')) {
+            liquidGlass(el, { rim: 40, edge: 1.1, power: 2.6, dispersion: 0.22 });
+        }
     </script>
 </body>
 </html>
