@@ -14,10 +14,11 @@
             margin: 0;
             padding: 40px 20px;
             min-height: 100vh;
-            /* 背景图：bg.jpg 和html同目录 */
-            background:
-                linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)),
-                url("bg.jpg") center / cover no-repeat fixed;
+            /* 改为在线森林背景图，不再依赖本地bg.jpg */
+            background-image: url("https://images.pexels.com/photos/28817249/pexels-photo-28817249.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         .container {
@@ -25,21 +26,21 @@
             margin: 0 auto;
         }
 
+        /* 标题修改：靠左、占屏幕一半宽度，放大字号 */
         .header-card {
-            text-align: center;
-            margin-bottom: 28px;
+            width: 50%;
+            text-align: left;
+            margin: 0 0 40px 0;
         }
-
         .header-card h1 {
-            font-size: 24px;
+            font-size: 2.4rem;
             color: #172823;
             margin: 0 0 10px;
             font-weight: 600;
         }
-
         .header-card p {
             color: #172823;
-            font-size: 15px;
+            font-size: 1rem;
             margin: 0;
         }
 
@@ -177,18 +178,23 @@
             padding: 14px;
             border-radius: 12px;
         }
-        .footer-tip {
-            text-align: center;
-            margin-top: 24px;
+        /* 底部说明框样式 */
+        .footer-notice {
+            width: 50%;
+            margin: 30px 0 40px 0;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.08);
             color: #172823;
-            font-size: 14px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: left;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
-        .copyright{
-            text-align:center;
-            margin-top:36px;
-            color:#172823;
-            font-size:13px;
-            line-height:1.6;
+        .footer-notice p {
+            margin: 6px 0;
         }
     </style>
 </head>
@@ -223,10 +229,11 @@
             <div class="success" id="msg"></div>
         </div>
 
-        <p class="footer-tip">
-            所有反馈会被妥善记录，相关内容仅用于班级意见整理与改进。
-        </p>
-        <p class="copyright">©2026 会计264班级反馈平台 | Design by 郝韶茜. All rights reserved.<br>未经许可，禁止复制、盗用本页面代码与视觉排版。</p>
+        <!-- 底部文字放进带边框容器 -->
+        <div class="footer-notice">
+            <p>所有反馈会被妥善记录，相关内容仅用于班级意见整理与改进。</p>
+            <p>©2026 会计264班级反馈平台 | Design by 郝韶茜. All rights reserved.<br>未经许可，禁止复制、盗用本页面代码与视觉排版。</p>
+        </div>
     </div>
 
     <script>
