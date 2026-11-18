@@ -13,8 +13,11 @@
         body {
             margin: 0;
             padding: 40px 20px;
-            background: linear-gradient(135deg, #B8DFD3 0%, #CDECE2 45%, #D7F3E8 100%);
             min-height: 100vh;
+            /* 背景图：bg.jpg 和html同目录 */
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)),
+                url("bg.jpg") center / cover no-repeat fixed;
         }
 
         .container {
@@ -29,13 +32,13 @@
 
         .header-card h1 {
             font-size: 24px;
-            color: #7C9B87;
+            color: #172823;
             margin: 0 0 10px;
             font-weight: 600;
         }
 
         .header-card p {
-            color: #55746A;
+            color: #172823;
             font-size: 15px;
             margin: 0;
         }
@@ -49,7 +52,7 @@
           padding: 32px;
           margin-bottom: 28px;
           transition: 0.3s ease;
-          color: rgb(0 0 0 / 0.86);
+          color: rgb(23, 40, 35);
         }
         .glass.is-pill { border-radius: 999px; corner-shape: round; }
 
@@ -60,7 +63,7 @@
           inset: 0;
           border-radius: inherit;
           z-index: -1;
-          background: rgb(235 226 255 / 0);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.35));
           -webkit-backdrop-filter: blur(2px) saturate(240%) brightness(1);
           backdrop-filter: blur(2px) saturate(240%) brightness(1) var(--glass-lens,);
           box-shadow:
@@ -78,8 +81,8 @@
         .glass:hover{
             transform: translateY(-2px);
         }
-        .glass > * { mix-blend-mode: multiply; }
-        .glass .secondary { color: rgb(60 60 67 / 0.7); }
+        .glass > * { mix-blend-mode: normal; }
+        .glass .secondary { color: rgb(23, 40, 35); }
 
         .glass.is-dark {
           color: rgb(255 255 255 / 0.94);
@@ -108,21 +111,21 @@
         }
         .radio-line p {
             font-weight: 500;
-            color: #44665A;
+            color: #172823;
             margin-bottom: 10px;
         }
         .radio-item {
             display: inline-block;
             margin-right: 24px;
             cursor: pointer;
-            color: #44665A;
+            color: #172823;
         }
 
         label {
             display: block;
             margin-top: 18px;
             font-weight: 500;
-            color: #44665A;
+            color: #172823;
         }
         textarea {
             width: 100%;
@@ -131,8 +134,8 @@
             border: 1px solid rgba(169, 204, 188, 0.7);
             border-radius: 12px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.5);
-            color: #355249;
+            background: rgba(255, 255, 255, 0.6);
+            color: #172823;
             transition: 0.2s;
         }
         textarea:focus {
@@ -164,26 +167,26 @@
         }
 
         .success {
-            color: #245F4B;
+            color: #172823;
             text-align: center;
             font-size: 18px;
             font-weight: 500;
             margin-top: 20px;
             display: none;
-            background: rgba(209, 235, 222, 0.9);
+            background: rgba(209, 235, 222, 0.92);
             padding: 14px;
             border-radius: 12px;
         }
         .footer-tip {
             text-align: center;
             margin-top: 24px;
-            color: #55746A;
+            color: #172823;
             font-size: 14px;
         }
         .copyright{
             text-align:center;
             margin-top:36px;
-            color:#55746A;
+            color:#172823;
             font-size:13px;
             line-height:1.6;
         }
@@ -262,10 +265,10 @@
     </script>
 
     <script type="module">
-        import { liquidGlass } from 'https://cdn.jsdelivr.net/gh/kubai087/glasswork@v1.1.0/lens.js';
-        for (const el of document.querySelectorAll('.glass')) {
-            liquidGlass(el, { rim: 40, edge: 1.1, power: 2.6, dispersion: 0.22 });
-        }
+      import { liquidGlass } from 'https://cdn.jsdelivr.net/gh/kubai087/glasswork@v1.1.0/lens.js';
+      for (const el of document.querySelectorAll('.glass')) {
+        liquidGlass(el, { rim: 40, edge: 1.1, power: 2.6, dispersion: 0.15 });
+      }
     </script>
 </body>
 </html>
