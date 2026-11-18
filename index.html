@@ -40,63 +40,63 @@
             margin: 0;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.45);
-            padding: 32px;
-            border-radius: 22px;
-            box-shadow: 0 12px 30px rgba(85, 116, 106, 0.1);
-            transition: 0.3s ease;
-            margin-bottom: 28px;
-        }
+        /* ===== Lumno liquid glass start ===== */
+        /* Lumno's liquid glass, from Glasswork (https://www.kubai.design/glasswork/).
+           Light glass with dark ink by default; .glass.is-dark for dark glass with light ink.
+           If Safari leaves a surface with busy content undrawn, move background and
+           backdrop-filter to a ::before under the content, as glass.css in the repo does. */
 
-        .card:hover {
-            box-shadow: 0 16px 36px rgba(85, 116, 106, 0.14);
+        .glass {
+          border-radius: 28px;
+          corner-shape: superellipse(1.25);
+        }
+        /* Capsules keep round ends. */
+        .glass.is-pill { border-radius: 999px; corner-shape: round; }
+
+        .glass {
+          background: rgb(235 226 255 / 0);
+          -webkit-backdrop-filter: blur(2px) saturate(240%) brightness(1);
+          backdrop-filter: blur(2px) saturate(240%) brightness(1) var(--glass-lens,);
+          box-shadow:
+            inset 1.5px 1.5px 1px -1px rgb(255 255 255 / 1),
+            inset -1.5px -1.5px 1px -1px rgb(255 255 255 / 0.6),
+            inset 0 0 0 0.5px rgb(255 255 255 / 0.3),
+            0 0 0 0.5px rgb(0 0 0 / 0.12),
+            0 4px 16px rgb(0 0 0 / 0.1),
+            inset 0 6px 8px -6px rgb(255 255 255 / 0),
+            inset 4px 0 8px -6px rgb(255 255 255 / 0),
+            inset -4px 0 8px -6px rgb(255 255 255 / 0),
+            inset 0 -6px 8px -6px rgb(0 0 0 / 0);
+          color: rgb(0 0 0 / 0.86);
+          padding: 32px;
+          transition: 0.3s ease;
+          margin-bottom: 28px;
+        }
+        .glass:hover {
             transform: translateY(-2px);
         }
+        .glass > * { mix-blend-mode: multiply; }
+        .glass .secondary { color: rgb(60 60 67 / 0.7); }
 
-        .card h2 {
-            margin-top: 0;
-            color: #7C9B87;
-            font-size: 20px;
+        .glass.is-dark {
+          background: rgb(30 30 34 / 0.241);
+          -webkit-backdrop-filter: blur(2px) saturate(220%) brightness(0.8);
+          backdrop-filter: blur(2px) saturate(220%) brightness(0.8) var(--glass-lens,);
+          box-shadow:
+            inset 1px 1px 0.5px -0.5px rgb(255 255 255 / 0.46),
+            inset -1px -1px 0.5px -0.5px rgb(255 255 255 / 0.18),
+            inset 0 0 0 0.5px rgb(255 255 255 / 0.06),
+            0 0 0 0.5px rgb(0 0 0 / 0.28),
+            0 4px 14px rgb(0 0 0 / 0.22),
+            inset 0 6px 8px -6px rgb(255 255 255 / 0.18),
+            inset 4px 0 8px -6px rgb(255 255 255 / 0.07),
+            inset -4px 0 8px -6px rgb(255 255 255 / 0.04),
+            inset 0 -6px 8px -6px rgb(0 0 0 / 0.08);
+          color: rgb(255 255 255 / 0.94);
         }
-
-        .feedback-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(124, 155, 135, 0.12);
-        }
-
-        .feedback-item:last-child {
-            border-bottom: none;
-        }
-
-        .status-pending {
-            color: #7a5c1f;
-            background: rgba(255, 241, 204, 0.85);
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        .status-done {
-            color: #3c7f66;
-            background: rgba(209, 235, 222, 0.85);
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        .tip-text {
-            font-size: 14px;
-            color: #55746A;
-            margin-top: 16px;
-            line-height: 1.6;
-        }
+        .glass.is-dark > * { mix-blend-mode: plus-lighter; }
+        .glass.is-dark .secondary { color: rgb(235 235 245 / 0.64); }
+        /* ===== Lumno liquid glass end ===== */
 
         .radio-line {
             margin-bottom: 24px;
@@ -186,7 +186,6 @@
             color: #55746A;
             font-size: 14px;
         }
-        /* 新增版权文字样式 */
         .copyright{
             text-align:center;
             margin-top:36px;
@@ -203,49 +202,22 @@
             <p>你的声音，会被认真听见</p>
         </div>
 
-        <div class="card">
-            <h2>反馈处理进度公示</h2>
-
-            <div class="feedback-item">
-                <span>【示例#001】自习环境优化建议</span>
-                <span class="status-pending">处理中</span>
-            </div>
-
-            <p class="tip-text">
-                目前公示示例仅展示一条。提交反馈后请保存工单编号，后续可在此查看处理进度。
-            </p>
-        </div>
-
-        <div class="card">
+        <!-- 这里替换成 glass 类 -->
+        <div class="glass">
             <form action="https://api.web3forms.com/submit" method="POST">
                 <input type="hidden" name="access_key" value="f50ad36d-6d00-4ba2-843e-5594134e258d">
                 <input type="hidden" name="subject" value="会计264班级反馈">
                 <input type="hidden" id="ticket_id" name="工单编号">
 
-                <label for="category">反馈分类</label>
-                <select name="category" id="category" required>
-                    <option value="">请选择分类</option>
-                    <option value="班级活动建议">班级活动建议</option>
-                    <option value="学习相关">学习相关</option>
-                    <option value="班级管理">班级管理意见</option>
-                    <option value="其他想法">其他想法</option>
-                </select>
-
                 <div class="radio-line">
-                    <p>提交方式</p>
+                    <p>反馈分类</p>
                     <label class="radio-item">
-                        <input type="radio" name="type" value="匿名反馈" checked> 匿名反馈
+                        <input type="radio" name="category" value="对老师课程的意见反馈" checked required> 对老师课程的意见反馈
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="type" value="实名反馈"> 实名反馈
+                        <input type="radio" name="category" value="对我工作方面的意见建议"> 对我工作方面的意见建议
                     </label>
                 </div>
-
-                <label for="name">姓名（匿名可以留空）</label>
-                <input type="text" name="name" id="name" placeholder="匿名提交不用填写">
-
-                <label for="contact">联系方式（选填）</label>
-                <input type="text" name="contact" id="contact" placeholder="想收到回复可以填写QQ">
 
                 <label for="message">你的意见 / 建议（必填）</label>
                 <textarea name="message" id="message" placeholder="写下你的想法..." required></textarea>
@@ -259,7 +231,6 @@
         <p class="footer-tip">
             所有反馈会被妥善记录，相关内容仅用于班级意见整理与改进。
         </p>
-        <!-- 更新后的版权防盗声明 -->
         <p class="copyright">©2026 会计264班级反馈平台 | Design by 郝韶茜. All rights reserved.<br>未经许可，禁止复制、盗用本页面代码与视觉排版。</p>
     </div>
 
@@ -289,7 +260,7 @@
 
                 if (result.success) {
                     msgBox.style.display = "block";
-                    msgBox.innerHTML = `提交成功！你的工单编号：<strong>${tid}</strong><br>请保存编号，后续可在公示区查看处理进度。`;
+                    msgBox.innerHTML = `提交成功！你的工单编号：<strong>${tid}</strong><br>反馈已匿名记录，我会尽快整理课程相关建议反馈给专业老师，并根据意见改进学习委员工作。`;
                     form.reset();
                     tid = genTicketID();
                     document.getElementById('ticket_id').value = tid;
@@ -302,6 +273,12 @@
                 msgBox.textContent = "网络异常，请稍后重试。";
             }
         });
+    </script>
+
+    <!-- Lumno liquid glass lens script -->
+    <script type="module">
+        import { liquidGlass } from 'https://cdn.jsdelivr.net/gh/kubai087/glasswork@v1.1.0/lens.js';
+        for (const el of document.querySelectorAll('.glass')) liquidGlass(el, { rim: 40, edge: 1.1, power: 2.6, dispersion: 0.22 });
     </script>
 </body>
 </html>
